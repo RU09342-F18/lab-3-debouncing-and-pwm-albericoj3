@@ -1,18 +1,17 @@
 # Software Debouncing
-In previous labs, we talked about how objects such as switches can cause some nasty effects since they are actually a mechanical system at heart. We talked about the simple hardware method of debouncing, but due to the many different design constraints, you may not be able to add or adjust hardware. Debouncing is also only one of many applications which would require the use of built in Timers to allow for other processes to take place.
+In this code, a button press will change the state of the LED. The code has been configured so that it elminates debouncing of the button. Debouncing occurs when the button is released from being pressed, and it oscilates for a brief moment of time. When this happens, a single button press can be interpreted as two button presses which could cause issue for any code. If debouncing were to occur in this example, pressing the button once would not change the state of the LED. 
 
-## Task
-You need to utilize the TIMER modules within the MSP430 processors to implement a debounced switch to control the state of an LED. You most likely will want to hook up your buttons on the development boards to an oscilloscope to see how much time it takes for the buttons to settle. The idea here is that your processor should be able to run other code, while relying on timers and interrupts to manage the debouncing in the background. *You should not be using polling techniques for this assignment.*
+## MSP430G2ET
+Pins:
+LED - Port 1.0 set to GPIO, output, inital state of 0
+Button - Port 1.3 set to GPIO, input, pull up resistor, interrupt enabled
+TimerA - AClock in UP Mode, interrupt enabled
 
-## Deliverables
-You will need to have two folders in this repository, one for each of the processors that you used for this part of the lab. Remember to replace this README with your own.
+## MSP432P401R
+Pins:
+LED - Port 1.0 set to GPIO, output, inital state of 0
+Button - Port 1.1 set to GPIO, input, pull up resistor, interrupt enabled
+TimerA - AClock in UP Mode, interrupt enabled
 
-### Hints
-You need to take a look at how the P1IE and P1IES registers work and how to control them within an interrupt routine. Remember that the debouncing is not going to be the main process you are going to run by the end of the lab.
-
-## Extra Work
-### Low Power Modes
-Go into the datasheets or look online for information about the low power modes of your processors and using Energy Trace, see what the lowest power consumption you can achieve while still running your debouncing code. Take a note when your processor is not driving the LED (or unplug the header connecting the LED and check) but running the interrupt routine for your debouncing.
-
-### Double the fun
-Can you expand your code to debounce two switches? Do you have to use two Timer peripherals to do this?
+## How the Code was Implemented
+The interrupt occurs on the negative edge of the button. Since the button is configured with a pull up resistor, the falling edge occurs when then button is pressed by the user. when the falling edge interrupt is triggered, a timer begins counting. Measuring the signal of the button on the oscilloscope, the time between bounces is about 400 ns. Therefore, the timer needs to count to a value of at least 400 ns. Since the clock choosen (ACLK) has a period higher than that (31 microseconds), one cycle should do. However, CCR0 was set to 10 just to be safe. Once the timer is done timing, The timerDone variable is set to 1 and the button can be triggered again. 
