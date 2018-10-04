@@ -1,18 +1,17 @@
 # Hardware PWM
-Now that you have done the software version of PWM, now it is time to start leveraging the other features of these Timer Modules.
+The purpose of this code is to generate a PWM singal using the harwarein the microcoontrollers. Instead of using two TACCR registers, an outmode will be selected and used to generate a PWM signal. This is more efficient than using two TACCR registers because the outmode is programmed into the microcontroller to perform a certain function. Whereas in software the programmer has to code in the functionality.
 
-## Task
-You need to replicate the same behavior as in the software PWM, only using the Timer Modules ability to directly output to a GPIO Pin instead of managing them in software. One way to thing about what should happen is that unless your are doing some other things in your code, your system should initialize, set the Timer Modules, and then turn off the CPU.
+## MSP430G2ET
+Pins: </br>
+LED - Port 1.6 set to GPIO, output, inital state of 0 </br>
+Button - Port 1.3 set to GPIO, input, pull up resistor, interrupt enabled </br>
+TimerA - AClock in UP Mode, outmode set to toggle/reset
 
-## Deliverables
-You will need to have two folders in this repository, one for each of the processors that you used for this part of the lab. Remember to replace this README with your own.
+## MSP430FR2311
+Pins: </br>
+LED - Port 1.0 set to GPIO, output, inital state of 0 </br>
+Button - Port 1.1 set to GPIO, input, pull up resistor, interrupt enabled </br>
+TimerA - AClock in UP Mode, outmode set to toggle/reset
 
-### Hints
-Read up on the P1SEL registers as well as look at the Timer modules ability to multiplex.
-
-## Extra Work
-### Using ACLK
-Some of these microprocessors have a built in ACLK which is extremely slow compared to your up to 25MHz available on some of them. What is the overall impact on the system when using this clock? Can you actually use your PWM code with a clock that slow?
-
-### Ultra Low Power
-Using a combination of ACLK, Low Power Modes, and any other means you may deem necessary, optimize this PWM code to run at 50% duty cycle with a LED on the MSP430FR5994. In particular, time how long your code can run on the fully charged super capacitor. You do not need to worry about the button control in this case, and you will probably want to disable all the GPIO that you are not using (nudge, nudge, hint, hint).
+## How to Implement the Code
+The code for hardware PWM is similar to the code for software PWM. Except in generating a hardware PWM signal, the outmode will set an interrupt for TACCR0 and TACCR1. When the interrupt for TACCR1 is hit, the signal will toggle and when the interrupt for TACCR0 is hit, the signal will reset. This is more efficient than generating the signal through software.
