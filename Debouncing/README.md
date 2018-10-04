@@ -3,12 +3,14 @@ In this code, a button press will change the state of the LED. The code has been
 
 ## MSP430G2ET
 Pins:
+
 LED - Port 1.0 set to GPIO, output, inital state of 0
 Button - Port 1.3 set to GPIO, input, pull up resistor, interrupt enabled
 TimerA - AClock in UP Mode, interrupt enabled
 
 ## MSP432P401R
 Pins:
+
 LED - Port 1.0 set to GPIO, output, inital state of 0
 Button - Port 1.1 set to GPIO, input, pull up resistor, interrupt enabled
 TimerA - AClock in UP Mode, interrupt enabled
