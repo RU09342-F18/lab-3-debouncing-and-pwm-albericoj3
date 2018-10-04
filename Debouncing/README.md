@@ -2,17 +2,15 @@
 In this code, a button press will change the state of the LED. The code has been configured so that it elminates debouncing of the button. Debouncing occurs when the button is released from being pressed, and it oscilates for a brief moment of time. When this happens, a single button press can be interpreted as two button presses which could cause issue for any code. If debouncing were to occur in this example, pressing the button once would not change the state of the LED. 
 
 ## MSP430G2ET
-Pins:
-
-LED - Port 1.0 set to GPIO, output, inital state of 0
-Button - Port 1.3 set to GPIO, input, pull up resistor, interrupt enabled
+Pins:</br>
+LED -  Port 1.0 set to GPIO, output, inital state of 0 </br>
+Button - Port 1.3 set to GPIO, input, pull up resistor, interrupt enabled </br>
 TimerA - AClock in UP Mode, interrupt enabled
 
 ## MSP432P401R
-Pins:
-
-LED - Port 1.0 set to GPIO, output, inital state of 0
-Button - Port 1.1 set to GPIO, input, pull up resistor, interrupt enabled
+Pins: </br>
+LED - Port 1.0 set to GPIO, output, inital state of 0 </br>
+Button - Port 1.1 set to GPIO, input, pull up resistor, interrupt enabled </br>
 TimerA - AClock in UP Mode, interrupt enabled
 
 ## How the Code was Implemented
